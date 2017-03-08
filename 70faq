@@ -206,4 +206,87 @@ compare:
 (echo 123;ls +) >& log.txt
 (echo 123;ls +) > log.txt 2>&1
 
+31) How to get part of string variable with echo command only ?
+
+echo ${variable:x:y}
+x - start position
+y - length
+example:
+variable="My name is Petras, and I am developer."
+echo ${variable:11:6} # will display Petras
+
+32) How to get home_dir with echo command only if string variable="User:123:321:/home/dir" is given ?
+
+echo ${variable#*:*:*:}
+or
+echo ${variable##*:}
+
+tip:
+$ a="User:123:321:/home/dir"
+$ echo $a
+User:123:321:/home/dir
+$ echo ${a##*:}
+/home/dir
+$ echo ${a%/*}
+User:123:321:/home
+$ echo ${a%%/*}
+User:123:321:
+
+扩展：取文件名或文件后缀
+##/%% 贪婪模式
+
+33) How to get “User” from the string above ?
+
+echo ${variable%:*:*:*}
+or
+echo ${variable%%:*}
+
+34) How to list users which UID less that 100 (awk) ?
+
+awk -F : '$3<100' /etc/passwd
+
+
+# 35) Write the program which counts unique primary groups for users and displays count and group name only
+
+cat /etc/passwd|cut -d: -f4|sort|uniq -c|while read c g
+do
+{ echo $c; grep :$g: /etc/group|cut -d: -f1;}|xargs -n 2
+done
+
+36) How to change standard field separator to ":" in bash shell ?
+
+IFS=":"
+
+37) How to get variable length ?
+
+${#variable}
+
+38) How to print last 5 characters of variable ?
+
+echo ${variable: -5}
+注意空格
+
+39) What difference between ${variable:-10} and ${variable: -10} ?
+
+${variable:-10} - gives 10 if variable was not assigned before
+${variable: -10} - gives last 10 symbols of variable
+
+40) How to substitute part of string with echo command only ?
+
+echo ${variable//pattern/replacement}
+//贪婪模式
+
+41) Which command replaces string to uppercase ?
+echo 'abcde' | tr '[a-z]' '[A-Z]'
+
+42) How to count local accounts ?
+wc -l /etc/passwd|cut -d " " -f1
+or
+cat /etc/passwd|wc -l
+tip: -d为分隔符 -f field -c character -b byte
+
+43) How to count words in a string without wc command ?
+
+set ${string}
+echo $# $1 $2
 
