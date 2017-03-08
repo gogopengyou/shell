@@ -1,0 +1,209 @@
+
+1) How to pass argument to a script ?
+
+./script argument
+
+Example : Script will show filename
+
+./show.sh file1.txt
+
+cat show.sh
+#!/bin/bash
+cat $1
+
+2) How to use argument in a script ?
+
+First argument: $1,
+Second argument : $2
+
+Example : Script will copy file (arg1) to destination (arg2)
+
+./copy.sh file1.txt /tmp/
+
+cat copy.sh
+#!/bin/bash
+cp $1 $2
+
+3) How to calculate number of passed arguments ?
+
+$#
+
+4) How to get script name inside a script ?
+
+$0
+
+5) How to check if previous command run successful ?
+
+$?
+
+6) How to get last line from a file ?
+
+tail -1
+
+7) How to get first line from a file ?
+
+head -1
+
+8) How to get 3rd element from each line from a file ?
+
+awk '{print $3}'
+
+9) How to get 2nd element from each line from a file, if first equal FIND
+
+awk '{ if ($1 == "FIND") print $2}'
+
+10)  How to debug bash script
+
+Add -xv to #!/bin/bash
+
+Example
+
+#!/bin/bash –xv
+
+11) Give an example how to write function ?
+
+function example() {
+echo "Hello world!"
+}
+
+12) How to add string to string ?
+
+V1="Hello"
+V2="World"
+V3=$V1+$V2
+echo $V3
+
+Output
+
+Hello+World
+
+13) How to add two integers ?
+
+V1=1
+V2=2
+let V3=$V1+$V2
+echo $V3
+
+Output
+3
+
+14) How to check if file exist on filesystem ?
+
+if [ -e /var/log/messages ]
+then
+echo "File exists"
+fi
+
+15) Write down syntax for all loops in shell scripting ?
+
+for loop :
+
+for i in $( ls ); do
+echo item: $i
+done
+
+while loop :
+
+#!/bin/bash
+COUNTER=0
+while [ $COUNTER -lt 10 ]; do
+echo The counter is $COUNTER
+let COUNTER=COUNTER+1
+done
+
+until loop :
+
+#!/bin/bash
+COUNTER=20
+until [ $COUNTER -lt 10 ]; do
+echo COUNTER $COUNTER
+let COUNTER-=1
+done
+
+16) What it means by #!/bin/sh or #!/bin/bash at beginning of every script ?
+
+That line tells which shell to use. #!/bin/bash script to execute using /bin/bash. In case of python script there there will be #!/usr/bin/python
+
+17) How to get 10th line from the text file ?
+
+head -10 file|tail -1
+
+18) What is the first symbol in the bash script file
+
+#
+
+19) What would be the output of command: [ -z "" ] && echo 0 || echo 1
+
+0
+说明：&&全真才真，一假全假；||全假才假，一真全真。
+so [ -z "" ] is true and then echo 0
+[ -n "" ] is false and then ? sorry,it's already none of your business!
+other: 
+echo 0 && echo 1 => 0 1
+echo 0 || echo 1 => 0
+
+20) What command "export" do ?
+
+Makes variable public in subshells
+
+21) How to run script in background ?
+
+add "&" to the end of script
+
+22) What "chmod 500 script" do ?
+
+Makes script executable for script owner
+
+23) What ">" do ?
+
+Redirects output stream to file or another stream.
+
+24) What difference between & and &&
+
+& - we using it when want to put script to background
+&& - when we wand to execute command/script if first script was finished successfully
+
+25) When we need "if" before [ condition ] ?
+
+When we need to run several commands if condition meets.
+
+26) What would be the output of the command: name=John && echo 'My name is $name'
+
+My name is $name
+tip: compare "My name is $name" && 'My name is $name'
+
+27) Which is the symbol used for comments in bash shell scripting ?
+
+#
+
+28) What would be the output of command: echo ${new:-variable}
+
+variable
+tip: 
+:-  if $new null then show variable 
+:+  if $new not null then show variable 
+:=  if $new null then show variable and redefine
+
+29) What difference between ' and " quotes ?
+
+' - we use it when do not want to evaluate variables to the values
+" - all variables will be evaluated and its values will be assigned instead.
+
+30) How to redirect stdout and stderr streams to log.txt file from script inside ?
+
+Add "exec >log.txt 2>&1" as the first command in the script 
+explanation： exec为自定义文件描述符；>log.txt 2>&1表示先将标准输出流重定向到log.txt，再将错误输出流重定向到标准输出流。
+总结：该执行脚本内的 stdout & stderr 都将打到log.txt中
+tip:
+0 stdin
+1 stdout
+2 stderr
+
+compare:
+(echo 123;ls +) > log.txt
+(echo 123;ls +) 1> log.txt
+(echo 123;ls +) 2> log.txt
+(echo 123;ls +) >& log.txt
+(echo 123;ls +) > log.txt 2>&1
+
+
